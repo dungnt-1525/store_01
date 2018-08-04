@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Role;
+use App\Models\Comment;
+use App\Models\Rate;
+use App\Models\Order;
+use App\Models\Post;
+use Cartalyst\Sentinel\Users\EloquentUser as CartalystUser;
+
 
 class User extends Authenticatable
 {
@@ -15,7 +22,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'last_name',
+        'first_name',
+        'email',
+        'phone',
+        'sex',
+        'birthday',
+        'address',
+        'permissions',
+        'last_login',
+        'img_url',
+        'role_id',
     ];
 
     /**
@@ -26,4 +43,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function role() {
+        return $this->belongsTo('Role');
+    }
+
+    public function comments() {
+        return $this->hasMany('Comment');
+    }
+
+    public function rates() {
+        return $this->hasMany('Rate');
+    }
+
+    public function orders() {
+        return $this->hasMany('Order');
+    }
+
+    public function posts() {
+        return $this->hasMany('Post');
+    }
 }
